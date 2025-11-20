@@ -1,0 +1,73 @@
+🟩 Problem
+You have a doubly linked list ,append values to the end of the list and then print the updated list.
+
+---
+🟩 Sample Input
+4
+201 202 203 204
+---
+🟩 Sample Output
+```
+201 202 203 204
+---
+
+🟩 Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+        Node prev;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+        Node tail = null;
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+            if (head == null) {
+                head = newnode;
+                tail = newnode;
+                return;
+            }
+            tail.next = newnode;
+            newnode.prev = tail;
+            tail = newnode;
+        }
+
+        void print() {
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        Solution s = new Solution();
+        Linkedlist ll = s.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        ll.print();
+    }
+}
+
+🟩 Time Complexity - O(N) — [Inserting N nodes and printing all nodes]
+🟩 Space Complexity - O(N) — [For storing the doubly linked list nodes]

@@ -1,0 +1,129 @@
+🟩 Problem
+
+You’re managing a task list where each task has a unique ID.
+A new task must be inserted at a specific position in the linked list.
+If the position is valid, insert the task and print the updated list.
+If the position is invalid, print:
+Position out of range
+
+---
+
+🟩 Input Format
+
+1. N — number of task IDs
+2. N space-separated task IDs
+3. P — position to insert at (1-based)
+4. M — new task ID
+
+---
+
+🟩 Sample Input
+
+```
+4
+101 102 103 104
+2
+999
+```
+
+🟩 Sample Output
+
+```
+101 999 102 103 104
+```
+
+---
+
+🟩 Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+
+        void insertAtPosition(int pos, int value) {
+            Node newnode = new Node(value);
+
+            // If inserting at the beginning
+            if (pos == 1) {
+                newnode.next = head;
+                head = newnode;
+                return;
+            }
+
+            Node curr = head;
+            for (int i = 1; i < pos - 1; i++) {
+                if (curr == null) {
+                    System.out.print("Position out of range");
+                    return;
+                }
+                curr = curr.next;
+            }
+
+            if (curr == null) {
+                System.out.print("Position out of range");
+                return;
+            }
+
+            newnode.next = curr.next;
+            curr.next = newnode;
+        }
+
+        void build(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newnode;
+        }
+
+        void print() {
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Solution obj = new Solution();
+        Linkedlist ll = obj.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.build(sc.nextInt());
+        }
+
+        int pos = sc.nextInt();
+        int value = sc.nextInt();
+
+        ll.insertAtPosition(pos, value);
+        ll.print();
+    }
+}
+```
+
+🟩 Time Complexity -O(n) — [We may traverse the list up to the insertion point once → O(n)]
+🟩 Space Complexity - O(n) — [Storing n nodes in the linked list]

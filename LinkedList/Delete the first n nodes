@@ -1,0 +1,100 @@
+🟩 Problem
+
+The user can delete tasks from the beginning of the list.
+Your job is simple:Delete the first M tasks.
+If the list becomes empty, print:List is empty
+Otherwise print the remaining IDs.
+
+
+🟩 Sample Input
+
+```
+5
+301 302 303 304 305
+3
+```
+
+🟩 Sample Output
+
+```
+304 305
+```
+
+🟩 Java Solution
+
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newnode;
+        }
+
+        void delete(int count) {
+            for (int i = 0; i < count; i++) {
+                if (head == null) break;
+                head = head.next;
+            }
+        }
+
+        void print() {
+            if (head == null) {
+                System.out.print("List is empty");
+                return;
+            }
+
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Linkedlist ll = new Solution().new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        int deletions = sc.nextInt();
+        ll.delete(deletions);
+
+        ll.print();
+    }
+}
+
+
+🟩 Time Complexity -O(N) - [Deleting M nodes from the head takes O(M), Printing remaining nodes takes O(N − M)]
+🟩 Space Complexity -O(N).
+
+

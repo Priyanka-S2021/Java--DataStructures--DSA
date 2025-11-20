@@ -1,0 +1,86 @@
+🔹 Problem:
+You need to maintain an inventory list using a linked list. Every product ID is inserted at the end of the list.
+After inserting all product IDs, print the full list.
+
+🔹 Input Format
+1. N — number of product IDs
+2. N space-separated integers — the product IDs
+
+🔹 Constraints — NA
+
+🔹 Sample Input
+```
+5
+101 102 103 104 105
+```
+🔹 Sample Output
+```
+101 102 103 104 105
+```
+
+🔹 Solution:
+
+import java.util.*;
+
+public class Solution {
+
+    static class Linkedlist {
+
+        class Node {
+            int data;
+            Node next;
+
+            Node(int data) {
+                this.data = data;
+                this.next = null;
+            }
+        }
+
+        Node head;
+
+        Linkedlist() {
+            head = null;
+        }
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newnode;
+        }
+
+        void print() {
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Linkedlist ll = new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        ll.print();
+    }
+}
+```
+
+🔹 Time Complexity - Insert at end: O(n) - Print: O(n)
+🔹 Space Complexity - O(n) to store the nodes - Extra space: O(1)
+

@@ -1,0 +1,116 @@
+🟩 Problem
+
+You have a linked list of task IDs, and you need to delete the task at a specified 1-based position.
+After deletion, print the updated task list.
+If the list is empty: print "List is empty".
+If the position is out of range: print "Position out of range".
+
+🟩 Sample Input
+---
+5
+101 102 103 104 105
+3
+---
+🟩 Sample Output
+---
+101 102 104 105
+---
+
+🟩 Java Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newnode;
+        }
+
+        void delete(int k, int n) {
+            if (head == null) {
+                System.out.print("List is empty");
+                return;
+            }
+
+            if (k <= 0 ||k > n) {
+                System.out.print("Position out of range");
+                return;
+            }
+
+            if (k == 1) {
+                head = head.next;
+                return;
+            }
+
+            Node curr = head;
+            for (int i = 1; i < k - 1 && curr != null; i++) {
+                curr = curr.next;
+            }
+            if (curr == null || curr.next == null) {
+                System.out.print("Position out of range");
+                return;
+            }
+            curr.next = curr.next.next;
+        }
+
+        void print() {
+            if (head == null) {
+                System.out.print("List is empty");
+                return;
+            }
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Solution s = new Solution();
+        Linkedlist ll = s.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        int k = sc.nextInt();
+
+        if (n == 0) {
+            System.out.print("List is empty");
+        } else if (pos < 1 || pos > n) {
+            System.out.print("Position out of range");
+        } else {
+            ll.delete(k, n);
+            ll.print();
+        }
+    }
+}
+
+🟩 Time Complexity - O(N) — Traversing the list for insertion and deletion.
+🟩 Space Complexity - O(N) — Storing the nodes in the linked list.

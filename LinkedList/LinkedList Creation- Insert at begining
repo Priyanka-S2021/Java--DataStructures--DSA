@@ -1,0 +1,85 @@
+🟩 Problem
+
+You’re building a task-management system where each task has a unique ID.
+New tasks must be added at the beginning of the linked list so they appear first.
+After inserting all task IDs, print the final linked list.
+
+---
+
+🟩 Input Format
+
+1. N — number of task IDs
+2. N space-separated integers — the task IDs
+
+---
+
+🟩 Sample Input
+```
+5
+201 202 203 204 205
+```
+
+🟩 Sample Output
+
+```
+205 204 203 202 201
+``
+
+🟩 Solution (Java)
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+
+        void begin(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+
+            newnode.next = head;
+            head = newnode;
+        }
+
+        void print() {
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Solution obj = new Solution();
+        Linkedlist ll = obj.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.begin(sc.nextInt());
+        }
+
+        ll.print();
+    }
+}
+
+
+🟩 Time Complexity -O(n) — [Each insertion at the beginning takes O(1), repeated n times → n × 1 = O(n)]
+🟩 Space Complexity - O(n) — [You store n nodes in the list]

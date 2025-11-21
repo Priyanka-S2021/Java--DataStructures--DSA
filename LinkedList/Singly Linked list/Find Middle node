@@ -1,0 +1,96 @@
+🟩 Problem
+You’re are working on singly linked list, identify middle one of the list.
+If the list has two middle ones, you return the second one.
+Print middle task and all tasks after it.
+---
+🟩 Sample Input
+5
+1 2 3 4 5
+---
+🟩 Sample Output
+
+3 4 5
+---
+
+🟩 Solution
+
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newnode;
+        }
+
+        Node find() {
+            Node slow = head;
+            Node fast = head;
+
+            while (fast != null && fast.next != null) //logic
+            {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+            return slow; 
+        }
+
+        void print(Node mid) //passing as node
+          { 
+            if (head == null) {
+                System.out.print("List is empty");
+                return;
+            }
+
+            Node curr = mid;   // start from mid
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Solution s = new Solution();
+        Linkedlist ll = s.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        Node mid = ll.find();  //instance
+        ll.print(mid);  
+    }
+}
+---
+
+🟩 Time Complexity -O(N) — standard slow–fast pointer traversal and printing.
+🟩 Space Complexity O(N) - to store N node values

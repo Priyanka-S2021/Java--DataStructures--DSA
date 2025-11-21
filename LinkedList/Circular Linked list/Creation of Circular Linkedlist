@@ -1,0 +1,79 @@
+🟩 Problem
+You're working with a circular to-do list.Your have to add new task at end of singly circular linked list.
+After inserting task,print updated list.
+
+---
+🟩 Sample Input
+4
+101 102 103 104
+---
+🟩 Sample Output -101 102 103 104
+---
+
+🟩 Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+        Node tail = null;
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                tail = newnode;
+                newnode.next = head;
+                return;
+            }
+
+            tail.next = newnode;
+            newnode.next = head;
+            tail = newnode;
+        }
+
+        void print() {
+            if (head == null) {
+                System.out.print("List is empty");
+                return;
+            }
+
+            Node curr = head;
+            do {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            } while (curr != head);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Solution s = new Solution();
+        Linkedlist ll = s.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        ll.print();
+    }
+}
+---
+
+🟩 Time Complexity -O(N) — for inserting and printing n nodes through circular list.
+🟩 Space Complexity -O(N) — for storing nodes.

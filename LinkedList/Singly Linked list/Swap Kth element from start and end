@@ -1,0 +1,110 @@
+🟩 Problem
+You have a list arranged in the order .You need to reorganize the list
+by swapping the value at position k from start with the k from end.
+After the swap, print the updated list.
+---
+🟩 Sample Input
+```
+5
+1 2 3 4 5
+2
+```
+🟩 Sample Output
+```
+1 4 3 2 5
+```
+---
+🟩 Solution
+
+import java.io.*;
+import java.util.*;
+public class Solution {
+    class Node
+    {
+        int data;
+        Node next;
+        
+        Node(int data)
+        {
+            this.data= data;
+            this.next=null;
+        }
+    }
+    class Linkedlist
+    {
+        Node head= null;
+        
+        void insert(int data)
+        {
+            Node newnode= new Node(data);
+            if (head== null)
+            {
+                head= newnode;
+                return;
+            }
+            Node curr= head;
+            while(curr.next!=null)
+            {
+                curr= curr.next;
+            }
+            curr.next=newnode;
+        }
+        
+        
+        void swap(int k)
+        {
+            Node start=head;
+            Node end= head;
+            Node temp=head;
+            
+            for(int i=1;i<k;i++)
+            {
+                temp=temp.next;
+            }
+            start= temp; //find first value
+            
+            while(temp.next!=null)
+            {
+                temp=temp.next;
+                end= end.next;  //find second value
+            }
+            
+            int x=start.data; // swapping just data, not nodes.
+            start.data= end.data;
+            end.data= x;
+        }
+        
+        void print()
+        {
+            if (head== null)
+            {
+               System.out.print("List is empty");
+                return;
+            }
+            Node curr= head;
+            while(curr!=null)
+            {
+                System.out.print(curr.data+" ");
+                curr= curr.next;
+            }
+        }
+    }
+    public static void main(String[] args) {
+        Scanner sc= new Scanner(System.in);
+        int n= sc.nextInt();
+        Solution s= new Solution();
+        Linkedlist ll= s.new Linkedlist();
+        
+        for(int i=1;i<=n;i++)
+        {
+            int val= sc.nextInt();
+            ll.insert(val);
+        }
+        int k= sc.nextInt();
+        ll.swap(k);
+        ll.print();
+    }
+}
+```
+🟩 Time Complexity - O(N) -[Creation of list: O(N) ,Finding both nodes: O(N) ,Swapping + printing: O(N)]
+🟩 Space Complexity -O(N)

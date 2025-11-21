@@ -1,0 +1,105 @@
+🟩 Problem
+You have a singly linked list.You want to reverse list in opposite order.
+After reversing, print all the song names in one line separated by spaces.
+---
+
+🟩 Sample Input
+```
+5
+Song1
+Song2
+Song3
+Song4
+Song5
+```
+🟩 Sample Output
+```
+Song5 Song4 Song3 Song2 Song1
+```
+
+🟩 Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        String data;
+        Node next;
+
+        Node(String data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+
+        void insert(String data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newnode;
+        }
+
+        void reverse() {
+            if (head == null) return;
+
+            Node prev = null;
+            Node curr = head;
+            Node front;
+
+            while (curr != null) {
+                front = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = front;
+            }
+
+            head = prev;
+        }
+
+        void print() {
+            if (head == null) {
+                System.out.print("List is empty");
+                return;
+            }
+
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        sc.nextLine();  // consume newline
+
+        Solution s = new Solution();
+        Linkedlist ll = s.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextLine());
+        }
+
+        ll.reverse();
+        ll.print();
+    }
+}
+
+---
+🟩 Time Complexity - O(N)
+🟩 Space Complexity -  O(N)

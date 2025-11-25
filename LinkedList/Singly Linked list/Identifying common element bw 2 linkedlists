@@ -1,0 +1,125 @@
+🟩 Problem
+
+You’re given two sorted linked lists containing product IDs.
+Your job is to find common values, print them.
+If not, print "No Intersection".
+
+---
+🟩 Sample Input
+```
+5
+101 102 103 104 105
+4
+102 104 106 108
+```
+🟩 Sample Output
+```
+102 104
+```
+🟩 Java Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    class Linkedlist {
+        Node head = null;
+
+        void insert(int data) {
+            Node newNode = new Node(data);
+
+            if (head == null) {
+                head = newNode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newNode;
+        }
+
+        Node common(Linkedlist l1, Linkedlist l2) {
+            Node p1 = l1.head;
+            Node p2 = l2.head;
+
+            Node dummy = new Node(0);
+            Node tail = dummy;
+
+            while (p1 != null && p2 != null) {
+
+                if (p1.data == p2.data) {
+                    tail.next = new Node(p1.data);
+                    tail = tail.next;
+
+                    p1 = p1.next;
+                    p2 = p2.next;
+
+                } else if (p1.data < p2.data) {
+                    p1 = p1.next;
+
+                } else {
+                    p2 = p2.next;
+                }
+            }
+
+            return dummy.next;
+        }
+
+        void print(Node head) {
+            if (head == null) {
+                System.out.print("No Intersection");
+                return;
+            }
+
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Solution s = new Solution();
+
+        int n1 = sc.nextInt();
+        Linkedlist ll1 = s.new Linkedlist();
+        for (int i = 0; i < n1; i++) {
+            ll1.insert(sc.nextInt());
+        }
+
+        int n2 = sc.nextInt();
+        Linkedlist ll2 = s.new Linkedlist();
+        for (int i = 0; i < n2; i++) {
+            ll2.insert(sc.nextInt());
+        }
+
+        Linkedlist ll = s.new Linkedlist();
+        Node ans = ll.common(ll1, ll2);
+
+        ll.print(ans);
+    }
+}
+```
+🟩 Time Complexity
+Two pointers walk through both lists once: O(n1 + n2)
+Building the intersection list: O(k) (k = number of matches)
+Printing: O(k)
+➡️ Overall: O(n1 + n2)
+
+🟩 Space Complexity
+Intersection list uses space only for common IDs: O(k)
+Pointers use constant extra space: O(1)
+➡️ Overall: O(n1 + n2) for input storage

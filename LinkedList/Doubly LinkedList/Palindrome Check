@@ -1,0 +1,90 @@
+🟩 Problem
+You’re tracking order IDs in a doubly linked list.
+Your job is to check whether the sequence forms a palindrome — meaning it reads the same from the front and the back.
+---
+🟩 Sample Input
+```
+5
+121 202 303 202 121
+```
+🟩 Sample Output
+```
+Yes
+```
+🟩 Solution
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+        Node prev;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+            this.prev = null;
+        }
+    }
+
+    class Linkedlist {
+
+        Node head = null;
+        Node tail = null;
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                tail = newnode;
+                return;
+            }
+
+            tail.next = newnode;
+            newnode.prev = tail;
+            tail = newnode;
+        }
+
+        void check() {
+            if (head == null) {
+                System.out.print("Yes");
+                return;
+            }
+
+            Node curr = head;
+            Node right = tail;
+
+            while (curr != null) {
+                if (curr.data != right.data) {
+                    System.out.print("No");
+                    return;
+                }
+                curr = curr.next;
+                right = right.prev;
+            }
+
+            System.out.print("Yes");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Solution s = new Solution();
+
+        int n = sc.nextInt();
+        Linkedlist ll = s.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        ll.check();
+    }
+}
+```
+🟩 Time Complexity - O(n)
+🟩 Space Complexity - O(n)

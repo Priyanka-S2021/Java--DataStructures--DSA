@@ -1,0 +1,121 @@
+🟩 Problem
+
+You’re storing tracking IDs in a singly linked list and need to check if the sequence forms a palindrome.
+A palindrome reads the same from the front and back.
+
+🟩 Approach:
+* Find the middle with slow/fast pointers
+* Reverse the second half
+* Compare both halves
+* Print Yes or No
+
+[You can by doubly linkedlist too]
+---
+
+🟩 Sample Input
+```
+5
+121 202 303 202 121
+```
+🟩 Sample Output
+```
+Yes
+---
+
+🟩  Solution (Singly Linked List)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class Linkedlist {
+
+        Node head = null;
+
+        void insert(int data) {
+            Node newnode = new Node(data);
+
+            if (head == null) {
+                head = newnode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newnode;
+        }
+
+        Node reverse(Node head) {
+            Node prev = null;
+            Node curr = head;
+
+            while (curr != null) {
+                Node nextNode = curr.next;
+                curr.next = prev;
+                prev = curr;
+                curr = nextNode;
+            }
+            return prev;
+        }
+
+        void check() {
+            if (head == null || head.next == null) {
+                System.out.print("Yes");
+                return;
+            }
+
+            Node slow = head;
+            Node fast = head;
+
+            while (fast != null && fast.next != null) {
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+            Node second = reverse(slow);
+            Node first = head;
+
+            while (second != null) {
+                if (first.data != second.data) {
+                    System.out.print("No");
+                    return;
+                }
+                first = first.next;
+                second = second.next;
+            }
+
+            System.out.print("Yes");
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Solution s = new Solution();
+
+        int n = sc.nextInt();
+        Linkedlist ll = s.new Linkedlist();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        ll.check();
+    }
+}
+```
+
+🟩 Time Complexity -O(n)
+🟩 Space Complexity-O(n)

@@ -1,0 +1,95 @@
+🟩 Problem
+
+You’re given an unsorted linked list of product IDs.
+Some IDs appear more than once ,your task is to remove duplicates while keeping the first occurrence of each ID.
+
+---
+🟩 Sample Input
+```
+7
+101 102 103 101 104 105 102
+```
+🟩 Sample Output
+```
+101 102 103 104 105
+```
+🟩 Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+        }
+    }
+
+    class LinkedList {
+        Node head = null;
+
+        void insert(int data) {
+            Node newNode = new Node(data);
+
+            if (head == null) {
+                head = newNode;
+                return;
+            }
+
+            Node curr = head;
+            while (curr.next != null) {
+                curr = curr.next;
+            }
+            curr.next = newNode;
+        }
+
+        // Remove duplicates without changing order
+        void removedup() {
+            Node curr = head;
+
+            while (curr != null) {
+                Node back = curr;
+
+                while (back.next != null) {
+                    if (back.next.data == curr.data) {
+                        back.next = back.next.next;
+                    } else {
+                        back = back.next;
+                    }
+                }
+
+                curr = curr.next;
+            }
+        }
+
+        void print() {
+            Node curr = head;
+            while (curr != null) {
+                System.out.print(curr.data + " ");
+                curr = curr.next;
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Solution s = new Solution();
+
+        int n = sc.nextInt();
+        LinkedList ll = s.new LinkedList();
+
+        for (int i = 0; i < n; i++) {
+            ll.insert(sc.nextInt());
+        }
+
+        ll.removedup();
+        ll.print();
+    }
+}
+```
+🟩 Time Complexity- Outer loop runs N times, inner loop runs up to N times - O(N²)
+
+🟩 Space Complexity - O(1)

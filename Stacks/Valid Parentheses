@@ -1,0 +1,89 @@
+🟩 Problem
+You need to check whether a string of brackets is valid.
+The rules are simple:
+1. Every opening bracket must have a matching closing bracket.
+2. The order must be correct.
+3. No closing bracket can appear without a matching open bracket on the stack.
+
+🟩 Sample Input
+()
+
+🟩 Sample Output
+true
+
+🟩 Solution (Stack using Linked List)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    static class Stack {
+        Node top;
+
+        void push(char data) {
+            Node newnode = new Node(data);
+            newnode.next = top;
+            top = newnode;
+        }
+
+        char pop() {
+            char val = top.data;
+            top = top.next;
+            return val;
+        }
+
+        boolean empty() {
+            return top == null;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        Stack stack = new Stack();
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                if (stack.empty()) {
+                    System.out.println("false");
+                    return;
+                }
+
+                char topval = stack.pop();
+
+                if ((c == ')' && topval != '(') ||
+                    (c == ']' && topval != '[') ||
+                    (c == '}' && topval != '{')) {
+                    System.out.println("false");
+                    return;
+                }
+            }
+        }
+
+        if (stack.empty()) {
+            System.out.println("true");
+        } else {
+            System.out.println("false");
+        }
+    }
+}
+
+
+🟩 Time Complexity - O(n) — each character is processed once
+🟩 Space Complexity - O(n) — in the worst case all opening brackets get pushed onto the stack

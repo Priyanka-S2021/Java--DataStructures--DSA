@@ -1,0 +1,92 @@
+🟩 Problem
+You’re building a stack-based simulation for an airport’s baggage system.
+Each operation affects a stack that can hold up to 100 containers.
+
+Supported commands:
+- Push X
+- Pop
+- Top
+- IsEmpty
+- Size
+If Pop or Top is called on an empty stack → print "Stack Underflow".
+
+🟩 Sample Input
+8
+Push 10
+Push 20
+Top
+Pop
+Top
+Size
+Pop
+IsEmpty
+
+🟩 Sample Output
+20
+10
+1
+true
+
+🟩 Solution (Array-based Stack)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        int[] stack = new int[100];
+        int top = -1;
+
+        while (n > 0) {
+            n--;
+            String line = sc.nextLine();
+            String[] arr = line.trim().split(" ");
+
+            String cmd = arr[0];
+
+            switch (cmd) {
+
+                case "Push":
+                    int val = Integer.parseInt(arr[1]);
+                    if (top < 99) {
+                        stack[++top] = val;
+                    }
+                    break;
+
+                case "Pop":
+                    if (top == -1) {
+                        System.out.println("Stack Underflow");
+                    } else {
+                        top--;
+                    }
+                    break;
+
+                case "Top":
+                    if (top == -1) {
+                        System.out.println("Stack Underflow");
+                    } else {
+                        System.out.println(stack[top]);
+                    }
+                    break;
+
+                case "IsEmpty":
+                    System.out.println(top == -1 ? "true" : "false");
+                    break;
+
+                case "Size":
+                    System.out.println(top + 1);
+                    break;
+            }
+        }
+    }
+}
+
+
+🟩 Time Complexity -Each operation runs in O(1) ---> Total for N commands → O(N)
+🟩 Space Complexity - Uses fixed array of size 100 → O(1)

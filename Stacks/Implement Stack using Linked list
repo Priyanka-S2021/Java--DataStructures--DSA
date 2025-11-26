@@ -1,0 +1,126 @@
+🟩 Problem
+
+You need to build a stack that manages returned library books. Each book has a name.
+Your stack supports:
+
+* Push BookName
+* Pop
+* Top
+* IsEmpty
+* Size
+
+If Pop or Top is called when the stack is empty, print "Stack Underflow".
+---
+
+🟩 Sample Input
+```
+7
+Push HarryPotter
+Push TheHobbit
+Top
+Size
+Pop
+Top
+IsEmpty
+```
+🟩 Sample Output
+```
+TheHobbit
+2
+HarryPotter
+false
+```
+🟩 Solution
+
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        String data;
+        Node next;
+
+        Node(String data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class LinkedList {
+        Node top = null;
+        int size = 0;
+
+        void push(String data) {
+            Node newNode = new Node(data);
+            newNode.next = top;
+            top = newNode;
+            size++;
+        }
+
+        void pop() {
+            if (top == null) {
+                System.out.println("Stack Underflow");
+                return;
+            }
+            top = top.next;
+            size--;
+        }
+
+        void printTop() {
+            if (top == null) {
+                System.out.println("Stack Underflow");
+                return;
+            }
+            System.out.println(top.data);
+        }
+
+        void isEmpty() {
+            System.out.println(top == null ? "true" : "false");
+        }
+
+        void printSize() {
+            System.out.println(size);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        Solution s = new Solution();
+        LinkedList stack = s.new LinkedList();
+
+        for (int i = 0; i < n; i++) {
+            String input = sc.nextLine();
+            String[] arr = input.split(" ");
+
+            switch (arr[0]) {
+                case "Push":
+                    stack.push(arr[1]);
+                    break;
+
+                case "Pop":
+                    stack.pop();
+                    break;
+
+                case "Top":
+                    stack.printTop();
+                    break;
+
+                case "IsEmpty":
+                    stack.isEmpty();
+                    break;
+
+                case "Size":
+                    stack.printSize();
+                    break;
+            }
+        }
+    }
+}
+```
+🟩 Time Complexity - Push: O(1) , Pop: O(1) , Top: O(1) ,IsEmpty: O(1) ,Size: O(1) -->  Overall -O(N) for N commands.
+🟩 Space Complexity- O(N)
+

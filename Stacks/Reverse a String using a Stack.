@@ -1,0 +1,72 @@
+🟩 Problem
+You need to simulate an undo operation in a text editor by reversing a sentence.
+A stack is perfect here because it returns characters in the opposite order they were added.
+
+🟩 Approach:
+1. Reads a sentence.
+2. Pushes each character onto a stack.
+3. Pops characters to print the reversed sentence.
+
+
+🟩 Sample Input
+Welcome to the coding world
+
+🟩 Sample Output
+dlrow gnidoc eht ot emocleW
+
+
+🟩 Solution (Stack using Linked List)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    static class Node {
+        char data;
+        Node next;
+
+        Node(char data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    static class Stack {
+        Node top = null;
+
+        void push(char data) {
+            Node newnode = new Node(data);
+            newnode.next = top;
+            top = newnode;
+        }
+
+        char pop() {
+            char val = top.data;
+            top = top.next;
+            return val;
+        }
+
+        boolean empty() {
+            return top == null;
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        Stack stack = new Stack();
+
+        for (int i = 0; i < s.length(); i++) {
+            stack.push(s.charAt(i));
+        }
+
+        while (!stack.empty()) {
+            System.out.print(stack.pop());
+        }
+    }
+}
+
+🟩 Time Complexity - O(n) [pushing n characters + popping n characters]
+🟩 Space Complexity - O(n)  [stack holds all characters]

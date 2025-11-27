@@ -1,0 +1,71 @@
+🟩 Problem
+
+You need to check if an expression contains redundant brackets.  
+A bracket pair is redundant when nothing meaningful (no operator) exists inside it.  
+Example:  
+(a) → redundant  
+((a + b)) → outer pair redundant  
+(a + (b + c)) → all meaningful, no redundant brackets
+
+🟩 Sample Input
+3
+(a + b)
+((a + b))
+(a + (b + c))
+
+🟩 Sample Output
+No
+Yes
+No
+
+🟩 Approach
+- Use a stack.  
+- When you see ')', pop everything until '(' and check whether any operator appeared.  
+- If no operator appeared between the pair, the brackets were redundant.
+
+
+🟩 Solution (Manual Stack)
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < n; i++) {
+            String s = sc.nextLine().trim();
+            char[] stack = new char[s.length()];
+            int top = -1;
+
+            boolean extra = false;
+
+            for (int j = 0; j < s.length(); j++) {
+                char ch = s.charAt(j);
+                if (ch != ')') {
+                    stack[++top] = ch;
+                } 
+                else {
+                    char t = stack[top--];
+                    boolean hasOperator = false;
+                    while (t != '(') {
+                        if (t == '+' || t == '-' || t == '*' || t == '/') {
+                            hasOperator = true;
+                        }
+                        t = stack[top--];
+                    }
+                    if (hasOperator == false) {
+                        extra = true;
+                        break;
+                    }
+                }
+            }
+            System.out.println(extra ? "Yes" : "No");
+        }
+    }
+}
+
+
+🟩 Time Complexity - O(n) per expression — each character pushed and popped once
+🟩 Space Complexity - O(n) — stack holds up to the full expression

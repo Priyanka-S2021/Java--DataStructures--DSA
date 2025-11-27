@@ -1,0 +1,74 @@
+🟩 Problem
+
+You’re given strings made of only '(' and ')'.
+Your job is to find the length of the longest valid parentheses substring in each string.
+A valid substring means properly balanced and continuous.
+
+Examples:
+"(()())" → 6
+")()()(" → longest is "()()" → 4
+"((())" → longest is "(())" → 4
+
+🟩 Sample Input
+3
+(()())
+)()()(
+((())
+
+🟩 Sample Output
+6
+4
+4
+
+🟩 Solution 
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc= new Scanner (System.in);
+        int n= sc.nextInt();
+        sc.nextLine();
+        
+        for(int i=0;i<n;i++)
+        {
+            String s= sc.nextLine();
+            char[] arr=new char[s.length()];
+            int top=-1;
+            int count=0;
+            int max=0;
+            
+            for(int j=0;j<s.length();j++)
+            {
+                char ch= s.charAt(j);
+                if (ch=='(')
+                {
+                    arr[++top]=ch;
+                }
+                else
+                {
+                    if(top>=0)
+                    {
+                        top--;
+                        count+=2;// as each is count individually not as pair
+                    }
+                    else
+                    {
+                        count=0;
+                    }
+                    if(top==-1)
+                    {
+                     max= Math.max(max,count);
+                    }
+                }
+            }
+         max= Math.max(max,count);
+         System.out.println(max);
+        }   
+    }
+}
+
+🟩 Time Complexity - O(n) for each string
+🟩 Space Complexity - O(n) due to the stack

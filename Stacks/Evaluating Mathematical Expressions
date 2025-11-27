@@ -1,0 +1,68 @@
+🟩 Problem
+- You need to evaluate a mathematical expression containing + - * /.  
+- Numbers can be multi-digit.  
+- Multiplication and division must happen before addition and subtraction.  
+- Division truncates toward zero.
+
+Use stack to evaluate mathematical expression and return the result.
+
+
+🟩 Sample Input : (A single string representing mathematical expression to be evaluated)
+3+5/2
+
+🟩 Sample Output : (integer value representing the result of the evaluated expression)
+5
+
+🟩 Solution (Array used as Stack)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        int[] arr = new int[s.length()];
+        int top = -1;
+
+        int num = 0;
+        char sign = '+';
+
+        s = s + "+";
+
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+
+            if (Character.isDigit(ch)) {
+                num = num * 10 + (ch - '0');
+            } 
+            else if (ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+
+                if (sign == '+') {
+                    arr[++top] = num;
+                } else if (sign == '-') {
+                    arr[++top] = -num;
+                } else if (sign == '*') {
+                    arr[top] = arr[top] * num;
+                } else if (sign == '/') {
+                    arr[top] = arr[top] / num;
+                }
+
+                sign = ch;
+                num = 0;
+            }
+        }
+
+        int ans = 0;
+        for (int i = 0; i <= top; i++) {
+            ans += arr[i];
+        }
+
+        System.out.print(ans);
+    }
+}
+
+🟩 Time Complexity - O(n) — each character scanned once
+🟩 Space Complexity -O(n) — stack stores partial values in worst case

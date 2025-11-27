@@ -1,0 +1,52 @@
+🟩 Problem
+Customer reviews often contain repeated adjacent characters like “loooove” or “amazzzingg”.  
+You need to clean the review by removing adjacent duplicates until no such pairs remain.
+
+Example:  
+"azxxzy" → remove "xx" → azzy → remove "zz" → ay  
+"aaccdd" → becomes empty
+
+
+🟩 Sample Input
+azxxzy
+
+🟩 Sample Output
+ay
+
+🟩 Solution (Manual Stack)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String s = sc.nextLine();
+
+        char[] arr = new char[s.length()];
+        int top = -1;
+
+        for (int i = 0; i < s.length(); i++) {
+
+            char ch = s.charAt(i);
+
+            if (top >= 0 && arr[top] == ch) {
+                top--;          // remove duplicate
+            } else {
+                arr[++top] = ch; 
+            }
+        }
+
+        if (top == -1) {
+            System.out.print("Empty String");
+        } else {
+            for (int i = 0; i <= top; i++) {
+                System.out.print(arr[i]);
+            }
+        }
+    }
+}
+
+🟩 Time Complexity - O(n) — each character pushed or removed once
+🟩 Space Complexity - O(n) — stack stored in an array

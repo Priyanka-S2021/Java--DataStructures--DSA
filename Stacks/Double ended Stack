@@ -1,0 +1,83 @@
+🟩 Problem
+- You need to build two stacks inside one shared array.  
+- Stack 1 grows from the left. Stack 2 grows from the right.  
+- They can expand until both tops meet. If there’s no free space left, the push should be ignored.  
+- Pop operations should print the popped value.  
+- Invalid operations print nothing.
+
+
+🟩 Sample Input
+6
+1 10
+1 20
+2 30
+2 40
+3
+4
+-1
+
+🟩 Sample Output
+20
+40
+
+
+🟩 Solution (Two Stacks in One Array)
+
+import java.util.*;
+public class Solution {
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int[] arr = new int[n];
+
+        int top = -1;      
+        int end = n;       
+
+        while (true) {
+
+            int ip = sc.nextInt();
+
+            if (ip == -1) break;
+
+            // push1 x
+            if (ip == 1) {
+                int x = sc.nextInt();
+                if (top + 1 < end) {
+                    arr[++top] = x;
+                }
+            }
+
+            // push2 x
+            else if (ip == 2) {
+                int x = sc.nextInt();
+                if (top + 1 < end) {
+                    end--;
+                    arr[end] = x;
+                }
+            }
+
+            // pop1
+            else if (ip == 3) {
+                if (top >= 0) {
+                    System.out.println(arr[top]);
+                    top--;
+                }
+            }
+
+            // pop2
+            else if (ip == 4) {
+                if (end < n) {
+                    System.out.println(arr[end]);
+                    end++;
+                }
+            }
+        }
+    }
+}
+
+
+🟩 Time Complexity - O(1) per operation — push and pop are constant time
+🟩 Space Complexity - O(n) — both stacks share one array of size n

@@ -1,0 +1,53 @@
+🟩 Problem
+
+You have a string containing only parentheses '(' and ')'.
+Your job is to find the minimum number of parentheses that need to be added to make the string valid (balanced).
+A valid string means every opening '(' has a matching closing ')' and vice versa.
+
+🟩 Sample Input
+1
+(()))
+
+🟩 Sample Output
+1
+
+🟩 Solution (Manual Stack)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt();
+        sc.nextLine();
+
+        for (int t = 0; t < T; t++) {
+            String s = sc.nextLine();
+            char[] arr = new char[s.length()];
+            int top = -1;
+            int count = 0; // count of unmatched closing parentheses
+
+            for (int i = 0; i < s.length(); i++) {
+                char ch = s.charAt(i);
+
+                if (ch == '(') {
+                    arr[++top] = ch;
+                } else {
+                    if (top >= 0) {
+                        top--;
+                    } else {
+                        count++;  // unmatched closing parenthesis
+                    }
+                }
+            }
+            // top+1 is the count of unmatched opening parentheses left in stack ,+1 as top is zero index based
+            System.out.println(count + (top + 1));
+        }
+    }
+}
+```
+
+🟩 Time Complexity - O(n) — one pass through the string
+🟩 Space Complexity - O(n) — stack implemented as array for unmatched '('

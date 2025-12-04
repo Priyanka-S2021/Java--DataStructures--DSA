@@ -1,0 +1,98 @@
+🟩 Problem
+You’re building a simple ticket booking queue.
+Customers must be handled in the order they arrive.
+
+Operations:
+
+• ENQUEUE name → add customer
+• DEQUEUE → serve and remove from front
+• DISPLAY → show queue
+
+Rules:
+- If queue is full → print: `Queue is full. Cannot add <name>`
+- If dequeue when empty → `Served Customer: Queue is empty. No customer to serve.`
+- If display when empty → `Queue is empty.`
+
+🟩 Sample Input
+10
+5
+ENQUEUE Alice
+ENQUEUE Bob
+DISPLAY
+DEQUEUE
+DISPLAY
+
+🟩 Sample Output
+Current Queue: Alice Bob
+Served Customer: Alice
+Current Queue: Bob
+
+🟩 Java Solution (ArrayList used as queue)
+
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc= new Scanner(System.in);
+        int n=sc.nextInt();
+        int o=sc.nextInt();
+        sc.nextLine();
+        List<String> q=new ArrayList<>();
+        
+        for(int i=0;i<o;i++)
+        {
+            String[] s=sc.nextLine().split(" ");
+            
+            if (s[0].equals("ENQUEUE"))
+            {
+                if (q.size()==n)
+                {
+                    System.out.println("Queue is full. Cannot add "+s[1]);
+                }
+                else
+                {
+                    q.add(s[1]);
+                }
+            }
+            else if (s[0].equals("DEQUEUE"))
+            {
+                if(q.isEmpty())
+                {
+                    System.out.println("Served Customer: Queue is empty. No customer to serve.");
+                }
+                else
+                {
+                    System.out.println("Served Customer: "+q.remove(0));
+                }
+            }
+            else if (s[0].equals("DISPLAY"))
+            {
+                if(q.isEmpty())
+                {
+                    System.out.println("Queue is empty.");
+                }
+                else
+                {
+                    System.out.print("Current Queue:");
+                    for(int j=0;j<q.size();j++)
+                    {
+                        System.out.print(" "+q.get(j));
+                    }
+                    System.out.println();
+                }
+            }
+        }
+    }
+} 
+
+🟩 Time Complexity
+• ENQUEUE: O(1)
+• DEQUEUE: O(n) (ArrayList shifts elements)
+• DISPLAY: O(n)
+
+🟩 Space Complexity -O(n) for storing customers.
+
+

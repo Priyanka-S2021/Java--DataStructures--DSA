@@ -70,3 +70,30 @@ public class Solution {
 
 🟩 Time Complexity - O(n) [pushing n characters + popping n characters]
 🟩 Space Complexity - O(n)  [stack holds all characters]
+
+
+
+🟩 Solution (USING INBUILT STACK):
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) 
+    {
+       Scanner sc= new Scanner(System.in);
+        String s= sc.nextLine();
+        
+        Stack<Character> stack=new Stack<>();
+        for(int i=0;i<s.length();i++)    // push logic
+        {
+         stack.push(s.charAt(i));
+        }
+        
+        while(stack.empty()!=true)  //pop logic
+        {
+            System.out.print(stack.pop());
+        }
+        
+    }
+}

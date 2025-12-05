@@ -1,0 +1,119 @@
+🟩 Problem
+You’re building a customer support ticketing queue.
+Tickets enter in order and are processed in order.
+A linked list is used so the queue can grow as needed.
+
+Operations:
+• ENQUEUE X → add ticket
+• DEQUEUE → process and remove from front
+• DISPLAY → show queue
+• Any unknown command → print `Invalid command.`
+
+Rules:
+- If dequeue on empty: `Queue is empty.`
+- If display on empty: `Queue is empty.`
+
+🟩 Sample Input
+5
+ENQUEUE T1
+ENQUEUE T2
+DISPLAY
+DEQUEUE
+DISPLAY
+
+🟩 Sample Output
+Current Queue: T1 T2
+Processed Ticket: T1
+Current Queue: T2
+
+🟩 Solution (Linked List Queue)
+
+import java.io.*;
+import java.util.*;
+
+public class Solution {
+
+    class Node {
+        String data;
+        Node next;
+
+        Node(String data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    class LinkedListQueue {
+        Node head = null;
+        Node tail = null;
+
+        void enqueue(String data) {
+            Node newNode = new Node(data);
+            if (head == null) {
+                head = tail = newNode;
+                return;
+            }
+            tail.next = newNode;
+            tail = newNode;
+        }
+
+        void dequeue() {
+            if (head == null) {
+                System.out.println("Queue is empty.");
+                return;
+            }
+            System.out.println("Processed Ticket: " + head.data);
+            head = head.next;
+        }
+
+        void display() {
+            if (head == null) {
+                System.out.println("Queue is empty.");
+                return;
+            }
+            Node curr = head;
+            System.out.print("Current Queue:");
+            while (curr != null) {
+                System.out.print(" " + curr.data);
+                curr = curr.next;
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        Solution sol = new Solution();
+        LinkedListQueue queue = sol.new LinkedListQueue();
+
+        for (int i = 0; i < n; i++) {
+            String[] cmd = sc.nextLine().split(" ");
+
+            if (cmd[0].equals("ENQUEUE")) {
+                queue.enqueue(cmd[1]);
+            } 
+            else if (cmd[0].equals("DEQUEUE")) {
+                queue.dequeue();
+            } 
+            else if (cmd[0].equals("DISPLAY")) {
+                queue.display();
+            } 
+            else {
+                System.out.println("Invalid command.");
+            }
+        }
+    }
+}
+
+
+🟩 Time Complexity
+• Enqueue: O(1)
+• Dequeue: O(1)
+• Display: O(n)
+
+🟩 Space Complexity
+O(n) for linked list nodes.

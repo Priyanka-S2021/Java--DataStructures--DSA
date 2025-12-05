@@ -1,0 +1,100 @@
+🟩 Problem
+Implement a queue using two stacks supporting these operations:
+- push(order) — add order at the back
+- pop() — remove and return front order
+- peek() — return front order without removing
+- empty() — check if queue is empty
+
+Input:
+- Number of operations
+- One operation per line (push X, pop, peek, empty)
+
+Output:
+- For push: `Order added: X`
+- For pop: `Order processed: X`
+- For peek: `Next order: X`
+- For empty: `Is queue empty: true/false`
+---
+
+🟩 Sample Input
+6
+push 101
+push 102
+peek
+pop
+peek
+empty
+```
+
+🟩 Sample Output
+Order added: 101
+Order added: 102
+Next order: 101
+Order processed: 101
+Next order: 102
+Is queue empty: false
+```
+
+🟩 Code
+
+import java.util.*;
+
+public class Solution {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine();
+
+        Stack<String> news = new Stack<>(); // Stack for new elements
+        Stack<String> olds = new Stack<>(); // Stack for old elements (front of queue)
+
+        for (int i = 0; i < n; i++) {
+            String[] input = sc.nextLine().split(" ");
+            String command = input[0];
+
+            switch (command) {
+                case "push":
+                    news.push(input[1]);
+                    System.out.println("Order added: " + input[1]);
+                    break;
+
+                case "pop":
+                    if (olds.isEmpty()) {
+                        while (!news.isEmpty()) {
+                            olds.push(news.pop());
+                        }
+                    }
+                    if (!olds.isEmpty()) {
+                        System.out.println("Order processed: " + olds.pop());
+                    } else {
+                        System.out.println("Queue is empty");
+                    }
+                    break;
+
+                case "peek":
+                    if (olds.isEmpty()) {
+                        while (!news.isEmpty()) {
+                            olds.push(news.pop());
+                        }
+                    }
+                    if (!olds.isEmpty()) {
+                        System.out.println("Next order: " + olds.peek());
+                    } else {
+                        System.out.println("Queue is empty");
+                    }
+                    break;
+
+                case "empty":
+                    boolean isEmpty = news.isEmpty() && olds.isEmpty();
+                    System.out.println("Is queue empty: " + isEmpty);
+                    break;
+
+                default:
+                    System.out.println("Invalid command");
+            }
+        }
+    }
+}
+```
+🟩Time Complexity : O(n)
+🟩Space Complexity: O(1)

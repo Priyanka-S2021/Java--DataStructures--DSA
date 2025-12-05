@@ -1,0 +1,44 @@
+🟩 Problem
+You have a queue of customer ticket numbers.
+Due to an error, the queue needs to be reversed — the last customer should be served first.
+
+Input: 
+- Number of customers N
+- N ticket numbers in order
+
+Output: Print the ticket numbers in reversed order
+---
+
+🟩 Sample Input
+5
+1 2 3 4 5
+```
+🟩 Sample Output
+5 4 3 2 1
+---
+
+🟩 Java Solution (using stack)
+
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        Stack<Integer> stack = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            stack.push(sc.nextInt());
+        }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + " ");
+        }
+    }
+}
+---
+
+🟩 Time complexity is O(n)
+🟩 space complexity is O(n).

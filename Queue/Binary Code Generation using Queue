@@ -1,0 +1,44 @@
+🟩 Problem
+You need to generate the binary representation for every number from 1 to N. 
+A queue is used to build binary numbers in increasing order.
+
+Input: An integer N
+Output: Print the binary values of 1 to N, separated by commas
+---
+🟩 Sample Input
+5
+```
+🟩 Sample Output
+1, 10, 11, 100, 101
+---
+
+🟩 Solution (using a queue)
+
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        Queue<String> q = new ArrayDeque<>();
+        q.add("1");
+
+        for (int i = 1; i <= n; i++) {
+
+            String curr = q.remove();
+            System.out.print(curr);
+
+            if (i < n) System.out.print(", ");
+
+            q.add(curr + "0");
+            q.add(curr + "1");
+        }
+    }
+}
+---
+
+🟩 Time complexity is O(n).
+🟩 Space complexity is O(n).
+

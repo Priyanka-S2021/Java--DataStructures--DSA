@@ -1,0 +1,68 @@
+🟩 Problem
+A warehouse queue holds N order IDs.
+Alex wants to reverse the first K items so urgent orders get processed first.
+Everything after K should stay exactly as it was.
+
+Input:
+* N
+* N order IDs
+* K
+
+Output: Queue after reversing the first K items
+---
+🟩 Sample Input
+```
+6
+1 2 3 4 5 6
+3
+```
+🟩 Sample Output
+```
+3 2 1 4 5 6
+---
+
+🟩 Solution (stack + queue)
+
+import java.util.*;
+
+public class Solution {
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        Queue<Integer> q = new ArrayDeque<>();
+        Stack<Integer> st = new Stack<>();
+
+        for (int i = 0; i < n; i++) {
+            q.add(sc.nextInt());
+        }
+
+        int k = sc.nextInt();
+
+        // Step 1: Push first K elements into stack
+        for (int i = 0; i < k; i++) {
+            st.push(q.remove());
+        }
+
+        // Step 2: Pop stack elements back into queue
+        while (!st.isEmpty()) {
+            q.add(st.pop());
+        }
+
+        // Step 3: Move the remaining (n - k) elements to the back
+        for (int i = 0; i < n - k; i++) {
+            q.add(q.remove());
+        }
+
+        // Output
+        while (!q.isEmpty()) {
+            System.out.print(q.remove());
+            if (!q.isEmpty()) System.out.print(" ");
+        }
+    }
+}
+```
+
+🟩 Time complexity - O(n)
+🟩 space complexity - O(k)

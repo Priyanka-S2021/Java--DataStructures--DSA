@@ -1,0 +1,132 @@
+A binary tree can be solved in two ways:
+  • By Iteration
+  • By Recursion
+
+-----------------------------------------------------------------------------------------------------------------------
+
+1.INSERTION
+
+• ITERATION (level order) :
+```````````````````````````
+import java.util.*;
+
+static Node insertBTIterative(Node root, int val) {
+    if (root == null) return new Node(val);
+
+    Queue<Node> q = new LinkedList<>();
+    q.add(root);
+
+    while (!q.isEmpty()) {
+        Node curr = q.poll();
+
+        if (curr.left == null) {
+            curr.left = new Node(val);
+            break;
+        } else q.add(curr.left);
+
+        if (curr.right == null) {
+            curr.right = new Node(val);
+            break;
+        } else q.add(curr.right);
+    }
+    return root;
+}
+
+• RECURSIVE :
+`````````````
+    ○ BT insertion is naturally iterative.
+    ○ Recursive BT insert is forced and usually avoided in interviews.
+
+--------------------------------------------------------------------------------------------------------------------
+2. SUM OF LEAF NODES
+
+RECURSIVE :
+``````````
+
+static int sumLeavesRec(Node root) {
+    if (root == null) return 0;
+    if (root.left == null && root.right == null)
+        return root.val;
+    return sumLeavesRec(root.left) + sumLeavesRec(root.right);
+}
+
+ITERATION :
+```````````
+
+static int sumLeavesIter(Node root) {
+    if (root == null) return 0;
+
+    int sum = 0;
+    Stack<Node> stack = new Stack<>();
+    stack.push(root);
+
+    while (!stack.isEmpty()) {
+        Node curr = stack.pop();
+
+        if (curr.left == null && curr.right == null)
+            sum += curr.val;
+
+        if (curr.right != null) stack.push(curr.right);
+        if (curr.left != null) stack.push(curr.left);
+    }
+    return sum;
+}
+
+------------------------------------------------------------------------------------------------------------------------
+3. PATH FIND (root → target)
+
+RECURSIVE :
+```````````
+
+static boolean findPathRec(Node root, int target, List<Integer> path) {
+    if (root == null) return false;
+
+    path.add(root.val);
+
+    if (root.val == target) return true;
+
+    if (findPathRec(root.left, target, path) ||
+        findPathRec(root.right, target, path))
+        return true;
+
+    path.remove(path.size() - 1);
+    return false;
+}
+
+ITERATION :
+``````````
+
+static boolean findPathIter(Node root, int target, List<Integer> path) {
+    if (root == null) return false;
+
+    Map<Node, Node> parent = new HashMap<>();
+    Queue<Node> q = new LinkedList<>();
+    q.add(root);
+    parent.put(root, null);
+
+    Node targetNode = null;
+
+    while (!q.isEmpty()) {
+        Node curr = q.poll();
+        if (curr.val == target) {
+            targetNode = curr;
+            break;
+        }
+        if (curr.left != null) {
+            parent.put(curr.left, curr);
+            q.add(curr.left);
+        }
+        if (curr.right != null) {
+            parent.put(curr.right, curr);
+            q.add(curr.right);
+        }
+    }
+
+    if (targetNode == null) return false;
+
+    while (targetNode != null) {
+        path.add(0, targetNode.val);
+        targetNode = parent.get(targetNode);
+    }
+    return true;
+}

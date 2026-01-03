@@ -1,0 +1,73 @@
+BINARY TREE:
+	• It is a non linear data structure to store data.
+  • It has two children/Nodes - left child and right child.
+	
+PROPERTIES OF TREE:
+    ○ Root - start node - important to traverse or track
+		○ Parent - child
+		○ Leaf node - Last node
+		○ Siblings - relation between two leaf nodes or between left and right child of a root.
+		○ Ancestors and desendents
+		○ Size- no of nodes.
+		○ Edges - link between two nodes.
+		○ Height - maximum no of edges bw two nodes  (ie from particular node to leaf node)
+		○ Level - diference of heigth bw root and particular node  (level of root node is always 0)
+	
+
+	TYPES:
+
+	 • On the basis of level / height completion:
+			§ Complete Binary Tree  -- two child or no child  - used in compression/segmentation
+			§ Perfect Binary Tree -- all leaf node must be at same level
+			§ Balanced Binary Tree
+			§ Height balanced tree
+			§ Skewed Binary Trees (like linkedlist)
+			§ Ordered BT --all node has same property (like BST)
+			
+		
+
+	• Binary Tree can be classified into the following special types:
+
+		○ Binary Search Tree
+		○ AVL Tree
+		○ Red Black Tree
+		○ B Tree
+		○ B+ Tree
+
+	
+
+WHY TREE?
+
+	• Insert /remove/ traverse in - O(logn)
+	• Cost efficient as less time complexity for operations
+	
+
+ORDER:
+
+	• INORDER: Left Root Right
+	• PREORDER: Root Left Right
+	• POSTORDER: Left Right Root
+
+	• Inorder,preorder, postorder-- we use recursion
+	• Level order --iteration with help of queue data structure
+
+
+Application:
+
+	• File systems 
+	• Databases
+	• Networking algorithms
+	• Maths equations representation
+	• Decision tress in ML
+	• Image/ file compression- huffman coding
+
+
+HINTS:
+
+	• Trees can be solved in two ways:
+		○ Recursion = stack is hidden
+		○ Iteration = you manage the stack yourself
+	• For height or longest path -[DFS] - Post order
+  • For breath or to go level by level -[BFS] - level order
+  • Tree is a type of graph - directed acyclic graph
+

@@ -1,0 +1,54 @@
+BINARY SEARCH TREE (BST)
+    A Binary Search Tree is a binary tree with rule:
+          - Left subtree → values less than the node
+          - Right subtree → values greater than the node
+          - This rule applies recursively to every node
+
+## BST Properties 
+
+- Ordering : All nodes in the left subtree are smaller, not just the immediate child.
+- Inorder traversal is sorted - Left → Root → Right always produces increasing order.
+- Search path is deterministic - At every node, comparison decides left or right. No backtracking.
+- A BST gives fast operations only if height stays logarithmic.
+---
+
+## Time Complexity 
+
+Let `h` = height of tree.
+* Search → O(h)
+* Insert → O(h)
+* Delete → O(h)
+
+- Best / Average case  :Balanced BST → h ≈ log n
+- Worst case : Skewed BST → h ≈ n (Becomes a linked list)
+- Traversal (any order) → O(n) always.
+---
+
+## Structural Behavior 
+
+- Shape depends on insertion order
+- Sorted input → worst case tree
+- Random input → roughly balanced tree
+- BST does not self-balance by default.
+---
+
+## Deletion Rules:
+
+When deleting a node:
+  1. No child → delete directly
+  2. One child → replace node with child
+  3. Two children → Replace with inorder successor (min in right subtree) Or inorder predecessor (max in left subtree)
+---
+
+## Traversals:
+  - Inorder → sorted output
+  - Preorder → recreate BST
+  - Postorder → safe deletion
+  - Level order has no BST advantage.
+---
+
+## When to use BST :
+  * Need sorted data
+  * Need range queries
+  * Need ordered traversal
+  * Insert/delete frequent

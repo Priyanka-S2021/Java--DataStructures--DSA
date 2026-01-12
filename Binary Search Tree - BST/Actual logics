@@ -1,0 +1,371 @@
+BINARY SEARCH TREE (BST)
+
+BST is a binary tree in which:
+	  • Left subtree contains values less than the node
+	  • Right subtree contains values greater than the node
+
+A BST can be solved in two ways:
+	• Recursion
+	• Iteration
+
+1. INSERTION IN BST
+````````````````````
+  Recursive
+  ``````````
+      static Node insertBSTRec(Node root, int val) 
+    {
+      if (root == null) return new Node(val);
+      if (val < root.val)
+          root.left = insertBSTRec(root.left, val);
+      else
+        root.right = insertBSTRec(root.right, val);
+      return root;
+      }
+
+  Iterative
+  ``````````
+      static Node insertBSTIter(Node root, int val) 
+      {
+            Node newNode = new Node(val);
+            if (root == null) return newNode;
+            Node curr = root;
+            while (true) 
+            {
+            if (val < curr.val)
+              {
+                if (curr.left == null) {
+                    curr.left = newNode;
+                    break;
+                  }
+              curr = curr.left;
+              } 
+            else 
+              {
+                if (curr.right == null) {
+                    curr.right = newNode;
+                    break;
+                  }
+                curr = curr.right;
+              }
+              }
+                return root;
+              }
+
+  Time Complexity: O(h)
+  `````````````````````
+    -  Why: Only one comparison path is followed from root to leaf.
+    -  Balanced BST → O(log n)
+    -  Skewed BST → O(n)
+
+----------------------------------------------------------------------------------------------------------------------------
+
+2. VALID BST
+``````````````
+    Recursive (range-based)
+    ``````````
+        static boolean isValidBSTRec(Node root, long min, long max)
+        {
+            if ( root == null) 
+                    return true;
+            if (root.val <= min || root.val >= max) 
+                    return false;
+              return isValidBSTRec(root.left, min, root.val) &&  isValidBSTRec(root.right, root.val, max);
+            }
+
+      Iterative (inorder check)
+      ``````````
+              static boolean isValidBSTIter(Node root)
+              {
+                Stack<Node> stack = new Stack<>();
+                Node curr = root;
+                Integer prev = null;
+                while (curr != null || !stack.isEmpty())
+              {
+                  while (curr != null) {
+                  stack.push(curr);
+                  curr = curr.left;
+                  }
+              curr = stack.pop();
+              if (prev != null && curr.val <= prev)
+                  return false;
+              prev = curr.val;
+              curr = curr.right;
+             }
+              return true;
+              }
+    Time Complexity: O(n)
+    `````````````````````
+      - Why: Every node must be checked at least once to confirm global ordering.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+3. SORTED BST (Inorder Traversal)
+``````````````````````````````````
+    Recursive
+    ``````````
+            static void inorderRec(Node root, List<Integer> res) 
+              {
+                if (root == null) return;
+                inorderRec(root.left, res);
+                res.add(root.val);
+                inorderRec(root.right, res);
+              }
+
+    Iterative
+    `````````
+            static void inorderIter(Node root, List<Integer> res)
+            {
+            Stack<Node> stack = new Stack<>();
+            Node curr = root;
+            while (curr != null || !stack.isEmpty()) 
+              {
+                while (curr != null) {
+                  stack.push(curr);
+                  curr = curr.left;
+                  }
+                curr = stack.pop();
+                res.add(curr.val);
+                curr = curr.right;
+              }
+          }
+
+Time Complexity: O(n)
+`````````````````````
+      -Why: Inorder traversal visits every node once. Sorted order comes from BST property, not from extra work.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+4. INSERT AT POSITION
+``````````````````````
+  Iterative: 
+  ``````````
+      static Node insertBST(Node root, int val) {
+      Node newNode = new Node(val);
+      if (root == null) 
+          return newNode;
+      Node curr = root;
+      Node parent = null;
+      while (curr != null) {
+          parent = curr;
+            if (val < curr.val)
+                curr = curr.left;
+            else
+              curr = curr.right;
+            }
+      if (val < parent.val)
+          parent.left = newNode;
+      else
+          parent.right = newNode;
+      return root;
+      }
+
+Time Complexity: O(h)
+````````````````
+    -  Why: Only one downward path is followed. No backtracking.
+
+Recursive: 
+``````````
+      static Node insertBSTRec(Node root, int val) {
+      if (root == null)
+          return new Node(val);
+      if (val < root.val)
+          root.left = insertBSTRec(root.left, val);
+      else
+          root.right = insertBSTRec(root.right, val);
+      return root;
+      }
+
+Time Complexity: O(h)
+`````````````````
+      -  Why: One recursive call per level.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+5. DELETE NODE FROM BST
+````````````````````````
+  Recursive
+  `````````
+      static Node deleteBSTRec(Node root, int key) {
+      if (root == null) return null;
+      if (key < root.val)
+          root.left = deleteBSTRec(root.left, key);
+      else if (key > root.val)
+          root.right = deleteBSTRec(root.right, key);
+      else {
+        if (root.left == null) return root.right;
+        if (root.right == null) return root.left;
+        Node succ = minValue(root.right);
+        root.val = succ.val;
+        root.right = deleteBSTRec(root.right, succ.val);
+      }
+      return root;
+    }
+    static Node minValue(Node root) {
+        while (root.left != null)
+          root = root.left;
+        return root;
+  }
+
+    Iterative
+    `````````
+      static Node deleteBSTIter(Node root, int key) {
+            Node parent = null, curr = root;
+            while (curr != null && curr.val != key) {
+            parent = curr;
+            if (key < curr.val) 
+                  curr = curr.left;
+            else 
+                  curr = curr.right;
+            }
+            if (curr == null) return root;
+            if (curr.left != null && curr.right != null) {
+                  Node succParent = curr;
+                  Node succ = curr.right;
+                  while (succ.left != null) {
+                  succParent = succ;
+                  succ = succ.left;
+                  }
+            curr.val = succ.val;
+            curr = succ;
+            parent = succParent;
+            }
+            Node child = (curr.left != null) ? curr.left : curr.right;
+            if (parent == null) 
+                  return child;
+            if (parent.left == curr)
+                    parent.left = child;
+            else 
+                parent.right = child;
+            return root;
+            }
+
+  Time Complexity: O(h)
+  `````````````````````
+	  -   Search for node → O(h)
+	  -   Find successor/predecessor → O(h)
+    -   Balanced → O(log n)
+    -   Skewed → O(n)
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+6. BFS (Level Order)
+---------------------
+static void bfs(Node root) {
+    if (root == null) return;
+Queue<Node> q = new LinkedList<>();
+    q.add(root);
+while (!q.isEmpty()) {
+        Node curr = q.poll();
+        System.out.print(curr.val + " ");
+        if (curr.left != null) q.add(curr.left);
+        if (curr.right != null) q.add(curr.right);
+    }
+}
+Time Complexity: O(n)
+Why: Every node is enqueued and dequeued once. BST ordering gives no advantage here.
+
+----------------------------------------------------------------------------------------------------------------------------
+
+7. DFS (BST Traversal)
+``````````````````````
+
+    Recursive
+    `````````
+            static void dfsRec(Node root) {
+              if (root == null) return;
+              dfsRec(root.left);
+              System.out.print(root.val + " ");
+              dfsRec(root.right);
+              }
+
+    Iterative
+    ``````````
+              static void dfsIter(Node root) {
+              Stack<Node> stack = new Stack<>();
+              Node curr = root;
+              while (curr != null || !stack.isEmpty()) {
+                while (curr != null) {
+                stack.push(curr);
+                curr = curr.left;
+                }
+              curr = stack.pop();
+              System.out.print(curr.val + " ");
+              curr = curr.right;
+              }
+            }
+
+      Time Complexity: O(n)
+      ````````````````
+            -  Why: DFS must visit every node regardless of ordering.
+
+---------------------------------------------------------------------------------------------------------------------------
+
+8. LINKED LIST → BST (Sorted)
+`````````````````````````````
+                static Node listToBSTRec(List<Integer> list, int l, int r) {
+                        if (l > r) 
+                              return null;
+                        int m = (l + r) / 2;
+                        Node root = new Node(list.get(m));
+                        root.left = listToBSTRec(list, l, m - 1);
+                        root.right = listToBSTRec(list, m + 1, r);
+                        return root;
+                        }
+
+          Time Complexity: O(n)
+          ```````````````
+              -  Why: Each list element is processed once to create one node.
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+9. BST → LINKED LIST (Sorted)
+`````````````````````````````
+    Recursive
+    `````````
+                        static void bstToListRec(Node root, List<Integer> list) {
+                          if (root == null) return;
+                          bstToListRec(root.left, list);
+                          list.add(root.val);
+                          bstToListRec(root.right, list);
+                          }
+
+  Iterative
+  `````````
+                        static void bstToListIter(Node root, List<Integer> list) {
+                        Stack<Node> stack = new Stack<>();
+                        Node curr = root;
+                        while (curr != null || !stack.isEmpty()) {
+                            while (curr != null) {
+                                stack.push(curr);
+                                curr = curr.left;
+                                  }
+                                curr = stack.pop();
+                                list.add(curr.val);
+                                curr = curr.right;
+                                }
+                                }
+  Time Complexity: O(n)
+  ```````````````
+          - Why: Inorder traversal visits each node exactly once.
+
+SUMMARY :
+```````````
+Operation	Time	
+Inser              - O(h)	Single comparison path
+Delete             - O(h)	Search + restructure
+Search             - O(h)	Ordered navigation
+Validate BST       - O(n)	All nodes must be checked
+Sorted traversal   - O(n)	Full inorder
+BFS	O(n)           - All nodes visited
+DFS	O(n)           - All nodes visited
+List → BST         - O(n)	One node per element
+BST → List         - O(n)	One visit per node
+
+
+	• BST improves search-based operations, not traversal
+	• If an operation:
+		○ uses comparisons → O(h)
+		○ requires visiting nodes → O(n)
